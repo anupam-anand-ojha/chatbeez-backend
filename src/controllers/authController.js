@@ -38,3 +38,5 @@ const registerUser = async (req, res) => {
         console.error("user not registered", err)
     }
 }
+
+export default {registerUser}
