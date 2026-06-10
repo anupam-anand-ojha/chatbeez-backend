@@ -8,6 +8,8 @@ const registerUser = async (req, res) => {
         const {username, email, password}= req.body;
         console.log("user registered sucessfully")
 
+        
+
         const isUserAlreadyExists = await userModel.findOne({
             $or:[
                 {username},
@@ -28,10 +30,18 @@ const registerUser = async (req, res) => {
             password:hash
         })
 
-        const token = jwt.sign({id:user._id}, process.env.JWT_SECRET);
+        const token = jwt.sign({id:user._id}, process.env.JWT_SECRET,{ expiresIn: "7d"});
         res.cookie("token", token);
 
-        res.status(201).json({message: "user registered sucessfully"})
+        res.status(201).json({
+         success: true,
+         token,
+         user: {
+          id: user._id,
+          username: user.username,
+          email: user.email
+    }
+});
 
     }
     catch(err){
