@@ -6,13 +6,10 @@ const socketHandler = (io) => {
 
     socket.on("join", (userId) => {
       users[userId] = socket.id;
-
-      console.log("Joined:", userId);
     });
 
     socket.on("send-message", (data) => {
-      const receiverSocketId =
-        users[data.receiverId];
+      const receiverSocketId = users[data.receiver];
 
       if (receiverSocketId) {
         io.to(receiverSocketId).emit(
@@ -23,6 +20,13 @@ const socketHandler = (io) => {
     });
 
     socket.on("disconnect", () => {
+      for (const userId in users) {
+        if (users[userId] === socket.id) {
+          delete users[userId];
+          break;
+        }
+      }
+
       console.log("User Disconnected");
     });
   });
