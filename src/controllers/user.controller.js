@@ -9,7 +9,8 @@ export const getProfile = async (req, res) => {
 
         return res.status(200).json(user);
 
-    } catch (error) {
+    } 
+    catch(error){
 
         return res.status(500).json({
             message: "Internal Server Error"
@@ -20,15 +21,15 @@ export const getProfile = async (req, res) => {
 export const getAllUsers = async (req, res) => {
     try {
 
-        const users = await userModel
-            .find(
+        const users = await userModel.find(
                 { _id: { $ne: req.user.id } },
                 "-password"
             );
 
         return res.status(200).json(users);
 
-    } catch (error) {
+    }
+    catch(error){
 
         return res.status(500).json({
             message: "Internal Server Error"

@@ -12,7 +12,8 @@ export const sendMessage = async (req, res) => {
     });
 
     return res.status(201).json(message);
-  } catch (error) {
+  } 
+  catch (error) {
     console.error(error);
 
     return res.status(500).json({
@@ -34,7 +35,8 @@ export const getMessages = async (req, res) => {
   }).sort({ createdAt: 1 });
 
     return res.status(200).json(messages);
-  } catch (error) {
+  } 
+  catch (error) {
     console.error(error);
 
     return res.status(500).json({
