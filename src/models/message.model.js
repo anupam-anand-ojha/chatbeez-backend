@@ -18,6 +18,16 @@ const messageSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+     isDelivered:{
+        type:Boolean,
+        default:false
+    },
+
+    isSeen:{
+        type:Boolean,
+        default:false
+    }
+
   },
   {
     timestamps: true,
