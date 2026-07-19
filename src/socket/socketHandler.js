@@ -9,9 +9,10 @@ const socketHandler = (io) => {
 
     socket.on("join", (userId) => {
       users[userId] = socket.id;
+      io.emit("online-users", Object.keys(users));
     });
 
-
+//send message
 
     socket.on("send-message", (data) => {
 
@@ -22,6 +23,8 @@ const socketHandler = (io) => {
       }
     });
 
+//user disconnect
+
     socket.on("disconnect", () => {
       for (const userId in users) {
         if (users[userId] === socket.id) {
@@ -29,6 +32,7 @@ const socketHandler = (io) => {
           break;
         }
       }
+        io.emit("online-users", Object.keys(users));
 
       console.log("User Disconnected");
     });
