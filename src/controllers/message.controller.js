@@ -33,6 +33,7 @@ export const getMessages = async (req, res) => {
     { sender: otherUserId, receiver: myId },
   ],
   }).sort({ createdAt: 1 });
+  
 
     return res.status(200).json(messages);
   } 
@@ -44,3 +45,28 @@ export const getMessages = async (req, res) => {
     });
   }
 };
+
+export const markAsSeen=async(req,res)=>{
+
+   const myId=req.user.id;
+
+   const senderId=req.params.userId;
+
+   const messages=await Message.updateMany(
+
+      {
+         sender:senderId,
+         receiver:myId,
+         isSeen:false
+      },
+
+      {
+         isSeen:true
+      }
+
+   );
+
+
+   res.json(messages);
+
+}
