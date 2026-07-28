@@ -12,7 +12,11 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5175",
+    origin: [
+      "http://localhost:5173",
+      "chatbeez.vercel.app",
+      "chatbeez-6k0ae308x-anupam-anand-ojhas-projects-0dac4885.vercel.app"
+    ],
     credentials: true,
   }),
 );
