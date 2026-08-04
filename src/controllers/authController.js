@@ -30,18 +30,12 @@ export const registerUser = async (req, res) => {
     });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "3d",
-    });
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      path: "/",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      expiresIn: "7d",
     });
 
     return res.status(201).json({
       success: true,
+      token,
       message: "User registered successfully",
     });
   } catch (error) {
@@ -79,16 +73,9 @@ export const loginUser = async (req, res) => {
       expiresIn: "7d",
     });
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      path: "/",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-
     return res.status(200).json({
       success: true,
+      token,
       message: "Login successful",
     });
   } catch (error) {

@@ -2,27 +2,22 @@ import jwt from "jsonwebtoken";
 
 const authMiddleware = async (req, res, next) => {
   try {
-    console.log("Cookies:", req.cookies);
-    console.log("Headers Cookie:", req.headers.cookie);
+    const authHeader = req.headers.authorization;
 
-    const token = req.cookies.token;
-
-    if (!token) {
-      console.log("No token received");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).json({
         message: "Unauthorized",
       });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const token = authHeader.split(" ")[1];
 
-    console.log("Decoded:", decoded);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = decoded;
 
     next();
   } catch (error) {
-    console.log(error);
     return res.status(401).json({
       message: "Invalid token",
     });
